@@ -1,24 +1,33 @@
 'use client'
 
-import { Form, Input } from "react-daisyui";
+import { PageHeader } from "@/app/components/page";
+import { Form, FormInput, FormButton, FormFileInput } from "@/app/components/form";
+import { useForm } from "react-hook-form";
+import { Artist, artistSchema } from "../artist.schema";
+import { resolver } from '@/app/lib/yup'
 
 export default function ArtistCreatePage() {
+  const context = useForm<Artist>({
+    ...resolver(artistSchema)
+  })
+
+  const onSubmit = async (data: any) => {
+    // await fetch('/api/artist', {
+    //   method: 'POST',
+    //   body: JSON.stringify(data)
+    // })
+  }
+
   return (
     <div>
-      {/* TODO: Create page header component */}
-      <h2 className="text-2xl font-bold">
-        Adicionar artista
-      </h2>
+      <PageHeader title="Adicionar artista" />
 
-      <Form className="max-w-xs">
-        {/* TODO: Create page input component with react-hook-form and zod integration */}
-        <label className="form-control w-full">
-          <div className="label">
-            <span className="label-text">Nome do artista/banda</span>
-          </div>
+      <Form context={context} onSubmit={onSubmit}>
+        <FormInput label="Nome do artista/banda" name="name" />
+        <FormFileInput label="Imagem da capa" name="cover" />
+        <FormInput label="País de origem" name="origin" />
 
-          <Input type="text" className="rounded-none" placeholder="Nome do artista/banda" />
-        </label>
+        <FormButton>Salvar</FormButton>
       </Form>
     </div>
   )
