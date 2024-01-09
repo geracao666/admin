@@ -16,10 +16,22 @@ export default function ArtistCreatePage() {
   const [{ data: genres = [], loading }] = useAxios('/api/genre')
 
   const onSubmit = async (data: any) => {
-    // await fetch('/api/artist', {
-    //   method: 'POST',
-    //   body: JSON.stringify(data)
-    // })
+    const reader = new FileReader()
+    const saveArtist = async () => {
+      const dataUrl = reader.result as string
+      const [_, coverBase64] = dataUrl?.split(';base64,')
+      const payload = JSON.stringify({
+        ...data,
+        cover: coverBase64,
+        genres: data.genres?.map((id: string) => Number(id))
+      })
+
+      await fetch('/api/artist', { method: 'POST', body: payload })
+      reader.removeEventListener('load', saveArtist)
+    }
+
+    reader.addEventListener('load', saveArtist)
+    reader.readAsDataURL(data.cover)
   }
 
   return (

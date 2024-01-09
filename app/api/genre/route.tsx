@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/app/lib/prisma'
 
 export async function GET() {
-  const prisma = new PrismaClient()
-
   try {
     const genres = await prisma.genre.findMany()
     return Response.json(genres)

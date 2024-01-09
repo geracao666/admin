@@ -13,8 +13,8 @@ datasource db {
 model Artist {
   id        Int      @id @default(autoincrement())
   name      String
-  cover     String
   origin    String
+  cover     Bytes
   genres    Genre[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
