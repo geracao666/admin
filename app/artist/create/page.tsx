@@ -22,8 +22,7 @@ export default function ArtistCreatePage() {
       const [_, coverBase64] = dataUrl?.split(';base64,')
       const payload = JSON.stringify({
         ...data,
-        cover: coverBase64,
-        genres: data.genres?.map((id: string) => Number(id))
+        cover: coverBase64
       })
 
       await fetch('/api/artist', { method: 'POST', body: payload })
@@ -48,7 +47,7 @@ export default function ArtistCreatePage() {
           items={
             genres.map((genre: Genre) => ({
               label: genre.name,
-              value: genre.id
+              value: genre.name
             }))
           }
           disabled={loading}

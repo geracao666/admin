@@ -8,7 +8,10 @@ export async function POST(request: Request) {
       data: {
         ...data,
         genres: {
-          connect: data.genres?.map((id: number) => ({ id }))
+          connectOrCreate: data.genres?.map((genre: string) => ({
+            where: { name: genre },
+            create: { name: genre }
+          }))
         }
       }
     })
