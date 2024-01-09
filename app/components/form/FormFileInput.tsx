@@ -17,7 +17,7 @@ export default function FormFileInput({
   } = useFormContext()
 
   const errorMessage = errors[name]?.message as string
-  const color = errorMessage ? 'error' : 'primary'
+  const color = errorMessage ? 'error' : 'neutral'
 
   return (
     <Controller
@@ -26,8 +26,6 @@ export default function FormFileInput({
       render={({ field: { onChange, onBlur, value, ...attrs } }) => (
         <FormLabel title={label} error={errorMessage}>
           <FileInput
-            className="rounded-none"
-            {...attrs}
             color={color}
             value={value?.fileName}
             onBlur={onBlur}
@@ -35,6 +33,7 @@ export default function FormFileInput({
               const file = event.target.files?.item(0) ?? null
               onChange(file)
             }}
+            {...attrs}
           />
         </FormLabel>
       )}

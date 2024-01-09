@@ -17,13 +17,12 @@ export default function FormInput({
   } = useFormContext()
 
   const errorMessage = errors[name]?.message as string
-  const color = errorMessage ? 'error' : 'primary'
+  const color = errorMessage ? 'error' : 'neutral'
 
   return (
     <FormLabel title={label} error={errorMessage}>
       <Input
         type="text"
-        className="rounded-none"
         placeholder={label}
         color={color}
         {...register(name)}

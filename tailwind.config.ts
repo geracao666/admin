@@ -16,7 +16,7 @@ const config: Config = {
     themes: [
       {
         light: {
-          ...require("daisyui/src/theming/themes")["[data-theme=light]"],
+          ...require("daisyui/src/theming/themes").light,
           background: colors.neutral[100]
         }
       }
