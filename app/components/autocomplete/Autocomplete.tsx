@@ -146,6 +146,7 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(({
 
         <input
           type="text"
+          autoComplete="off"
           className={classNames('flex-1 min-w-0', {
             'input-disabled': disabled
           })}

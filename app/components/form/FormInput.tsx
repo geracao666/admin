@@ -23,6 +23,7 @@ export default function FormInput({
     <FormLabel title={label} error={errorMessage}>
       <Input
         type="text"
+        autoComplete="off"
         placeholder={label}
         color={color}
         {...register(name)}
