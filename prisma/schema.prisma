@@ -11,17 +11,52 @@ datasource db {
 }
 
 model Artist {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
   origin    String
   cover     Bytes
-  genres    Genre[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  tags      Tag[]
+  releases  Release[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
-model Genre {
+model Tag {
   id      Int      @id @default(autoincrement())
   name    String   @unique
   artists Artist[]
+}
+
+model Release {
+  id            Int         @id @default(autoincrement())
+  type          ReleaseType @relation(fields: [releaseTypeId], references: [id])
+  name          String
+  artwork       Bytes
+  downloadUrl   String
+  discs         Disc[]
+  artists       Artist[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  releaseTypeId Int
+}
+
+model ReleaseType {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  releases Release[]
+}
+
+model Disc {
+  id        Int     @id @default(autoincrement())
+  number    Int
+  tracks    Track[]
+  release   Release @relation(fields: [releaseId], references: [id])
+  releaseId Int
+}
+
+model Track {
+  id     Int    @id @default(autoincrement())
+  name   String
+  disc   Disc   @relation(fields: [discId], references: [id])
+  discId Int
 }

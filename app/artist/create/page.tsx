@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Artist, artistSchema } from "../artist.schema";
 import { resolver } from '@/app/lib/yup'
 import useAxios from "@/app/lib/axios";
-import { Genre } from "@prisma/client";
+import { Tag } from "@prisma/client";
 import ReactCrop, { Crop, PercentCrop } from 'react-image-crop'
 import "react-image-crop/dist/ReactCrop.css";
 import { useRef, useState } from "react";
@@ -28,7 +28,7 @@ export default function ArtistCreatePage() {
   } = context
 
   const imgRef = useRef<HTMLImageElement>(null)
-  const [{ data: genres = [], loading }] = useAxios('/api/genre')
+  const [{ data: tags = [], loading }] = useAxios('/api/tag')
   const { result: coverDataUrl } = useFileReader(watch('cover') as File)
   
   const [cropWidth, cropHeight] = [400, 400]
@@ -133,12 +133,12 @@ export default function ArtistCreatePage() {
         <FormInput label="País de origem" name="origin" />
 
         <FormAutocomplete
-          name="genres"
-          label="Gêneros musicais"
+          name="tags"
+          label="Tags"
           items={
-            genres.map((genre: Genre) => ({
-              label: genre.name,
-              value: genre.name
+            tags.map((tag: Tag) => ({
+              label: tag.name,
+              value: tag.name
             }))
           }
           disabled={loading}
