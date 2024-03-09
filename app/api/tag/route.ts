@@ -7,7 +7,5 @@ export async function GET() {
   } catch (err) {
     // TODO: Handle error correctly
     console.log('Error while retrieving tags:', err)
-  } finally {
-    await prisma.$disconnect()
   }
 }

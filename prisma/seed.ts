@@ -26,8 +26,6 @@ async function main() {
     }
   } catch (err) {
     console.log('Error while seeding:', err)
-  } finally {
-    await prisma.$disconnect()
   }
 }
 

@@ -12,9 +12,10 @@ datasource db {
 
 model Artist {
   id        Int       @id @default(autoincrement())
-  name      String
+  name      String    @unique
+  slug      String    @unique
   origin    String
-  cover     Bytes
+  cover     String
   tags      Tag[]
   releases  Release[]
   createdAt DateTime  @default(now())
@@ -31,8 +32,8 @@ model Release {
   id            Int         @id @default(autoincrement())
   type          ReleaseType @relation(fields: [releaseTypeId], references: [id])
   name          String
-  artwork       Bytes
-  downloadUrl   String
+  artwork       String
+  downloadUrl   String // TODO: make optional
   discs         Disc[]
   artists       Artist[]
   createdAt     DateTime    @default(now())
@@ -56,6 +57,7 @@ model Disc {
 
 model Track {
   id     Int    @id @default(autoincrement())
+  number Int
   name   String
   disc   Disc   @relation(fields: [discId], references: [id])
   discId Int
