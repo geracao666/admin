@@ -99,3 +99,57 @@ export const createArtist = async (
     create: { ...entity }
   })
 }
+
+export const getArtistsSlugs = async () => {
+  const slugs = await prisma.artist.findMany({
+    select: {
+      slug: true
+    }
+  })
+
+  return slugs
+}
+
+export const getArtistBySlug = async (slug: string) => {
+  const artist = await prisma.artist.findFirst({
+    where: { slug },
+    include: {
+      tags: true,
+      releases: {
+        include: {
+          type: true,
+          discs: {
+            include: {
+              tracks: true
+            }
+          }
+        }
+      }
+    }
+  })
+
+  if (!artist) {
+    return null
+  }
+
+  return {
+    name: artist.name,
+    origin: artist.origin,
+    cover: artist.cover,
+    createdAt: artist.createdAt,
+    updatedAt: artist.updatedAt,
+    tags: artist.tags.map(({ name }) => name),
+    releases: artist.releases.map(release => ({
+      type: release.type.name,
+      name: release.name,
+      artwork: release.artwork,
+      downloadUrl: release.downloadUrl,
+      createdAt: release.createdAt,
+      updatedAt: release.updatedAt,
+      discs: release.discs.map(disc => ({
+        number: disc.number,
+        tracks: disc.tracks.map(({ name }) => name)
+      }))
+    }))
+  }
+}

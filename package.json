@@ -7,6 +7,7 @@
     "build": "dotenv -e .env.management -- next build",
     "start": "next start",
     "lint": "next lint",
+    "serve": "npx serve@latest out",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "prisma:seed": "prisma db seed",

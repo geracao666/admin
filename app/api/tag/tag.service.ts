@@ -25,5 +25,8 @@ export const getArtistsByTag = async (name: string) => {
     return null
   }
 
-  return tag.artists.map(({ slug }) => slug)
+  return {
+    ...tag,
+    artists: tag.artists.map(({ slug }) => slug)
+  }
 }
