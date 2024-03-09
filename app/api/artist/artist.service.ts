@@ -118,6 +118,7 @@ export const getArtistBySlug = async (slug: string) => {
       releases: {
         include: {
           type: true,
+          artists: true,
           discs: {
             include: {
               tracks: true
@@ -149,7 +150,12 @@ export const getArtistBySlug = async (slug: string) => {
       discs: release.discs.map(disc => ({
         number: disc.number,
         tracks: disc.tracks.map(({ name }) => name)
-      }))
+      })),
+      feat: release.artists.flatMap((featArtist) => (
+        featArtist.slug === slug
+          ? []
+          : { name: featArtist.name, slug: featArtist.slug }
+      ))
     }))
   }
 }
