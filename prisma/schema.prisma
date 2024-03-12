@@ -33,7 +33,7 @@ model Release {
   type          ReleaseType @relation(fields: [releaseTypeId], references: [id])
   name          String
   artwork       String
-  downloadUrl   String // TODO: make optional
+  downloadUrl   String?
   discs         Disc[]
   artists       Artist[]
   createdAt     DateTime    @default(now())
