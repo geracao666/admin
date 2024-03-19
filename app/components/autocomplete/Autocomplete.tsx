@@ -172,7 +172,7 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(({
 
       <ul
         className={classNames(
-          'absolute w-full menu bg-base-100 rounded-box',
+          'absolute block w-full max-h-40 overflow-y-auto menu bg-base-100 rounded-box',
           { hidden: !open }
         )}
       >
