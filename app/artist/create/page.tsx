@@ -28,7 +28,7 @@ export default function ArtistCreatePage() {
   } = context
 
   const imgRef = useRef<HTMLImageElement>(null)
-  const [{ data: tags = [], loading }] = useAxios('/api/tag')
+  const [{ data: tags = [], loading }] = useAxios<string[]>('/api/tag/index.json')
   const { result: coverDataUrl } = useFileReader(watch('cover') as File)
   
   const [cropWidth, cropHeight] = [400, 400]
@@ -136,9 +136,9 @@ export default function ArtistCreatePage() {
           name="tags"
           label="Tags"
           items={
-            tags.map((tag: Tag) => ({
-              label: tag.name,
-              value: tag.name
+            tags.map((tag: string) => ({
+              label: tag,
+              value: tag
             }))
           }
           disabled={loading}
