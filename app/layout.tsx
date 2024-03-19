@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { APP_TITLE, APP_DESCRIPTION } from './config'
 import AppNavbar from './components/AppNavbar'
+import AppMenu from './components/AppMenu'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,10 +21,16 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body className={inter.className}>
-        <AppNavbar />
+        <div className="flex h-screen">
+          <AppMenu />
 
-        <div className="container mx-auto px-32 py-8">
-          {children}
+          <div className="flex-grow">
+            <AppNavbar />
+
+            <div className="container px-16 py-8">
+              {children}
+            </div>
+          </div>
         </div>
       </body>
     </html>
