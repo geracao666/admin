@@ -1,4 +1,4 @@
-import { createArtist } from './artist.service'
+import { createArtist, getArtistsPaginated } from './artist.service'
 import ArtistAlreadyExistsError from './ArtistAlreadyExistsError'
 import { StatusCodes } from 'http-status-codes'
 
@@ -16,6 +16,20 @@ export async function POST(request: Request) {
       )
     }
 
+    throw err
+  }
+}
+
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const { artists, total } = await getArtistsPaginated({
+      page: Number(searchParams.get('page')),
+      limit: Number(searchParams.get('limit'))
+    })
+
+    return Response.json({ total, data: artists })
+  } catch (err) {
     throw err
   }
 }

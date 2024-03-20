@@ -3,6 +3,7 @@ import createSlug from "@/app/utils/createSlug";
 import prisma from '@/app/lib/prisma'
 import ArtistAlreadyExistsError from "./ArtistAlreadyExistsError";
 import { uploadArtworkImage, uploadCoverImage } from "../image/image.service";
+import { Pagination } from "../types";
 
 const connectOrCreateTags = (tags: string[]) => ({
   connectOrCreate: tags.map((name: string) => ({
@@ -158,4 +159,17 @@ export const getArtistBySlug = async (slug: string) => {
       ))
     }))
   }
+}
+
+export const getArtistsPaginated = async ({ page = 1, limit = 15 }: Pagination) => {
+  const total = await prisma.artist.count()
+  const artists = await prisma.artist.findMany({
+    skip: (page - 1) * limit,
+    take: limit,
+    include: {
+      tags: true
+    }
+  })
+
+  return { artists, total }
 }
