@@ -1,17 +1,36 @@
 'use client'
 
-import { Badge, Table } from "react-daisyui";
+import { Badge, Divider, Table } from "react-daisyui";
 import { PageHeader } from "../components/page";
 import useAxios from "axios-hooks";
+import { Pagination } from "../components/pagination";
+import { PaginationProps } from "../components/pagination/Pagination.d";
+import { useEffect, useState } from "react";
 
 export default function ArtistPage() {
+  const [pagination, setPagination] = useState<PaginationProps>({
+    page: 1,
+    limit: 15
+  })
+
   const [{ data: artists = [], loading }] = useAxios({
     url: '/api/artist',
     params: {
-      page: 1,
-      limit: 15
+      page: pagination.page,
+      limit: pagination.limit
     }
   })
+
+  useEffect(() => {
+    setPagination(current => ({
+      ...current,
+      total: artists.total
+    }))
+  }, [artists])
+
+  const handlePageSelected = (page: number) => {
+    setPagination((pagination) => ({ ...pagination, page }))
+  }
 
   return (
     <div>
@@ -48,6 +67,12 @@ export default function ArtistPage() {
           ))}
         </Table.Body>
       </Table>
+
+      <Divider />
+
+      <div className="flex w-full justify-center">
+        <Pagination {...pagination} onPageSelected={handlePageSelected} />
+      </div>
     </div>
   )
 }
