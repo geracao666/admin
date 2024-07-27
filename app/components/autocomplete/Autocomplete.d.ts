@@ -19,6 +19,7 @@ export type AutocompleteReducerAction =
   | { type: 'open_menu' }
   | { type: 'close_menu' }
   | { type: 'set_filter', text: string }
+  | { type: 'set_selected_items', value: AutocompleteValue, items: AutocompleteItem[] }
   | { type: 'select_single_item', index: number }
   | { type: 'toggle_item_selection', index: number }
   | { type: 'remove_last_item' }

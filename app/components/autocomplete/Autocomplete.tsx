@@ -27,6 +27,17 @@ const reducer = (state: AutocompleteReducerState, action: AutocompleteReducerAct
     case 'set_filter': {
       return { ...state, filterText: action.text }
     }
+    case 'set_selected_items': {
+      return {
+        ...state,
+        dirty: false,
+        selectedItemsIndex: !action.value ? [] : (
+          Array.isArray(action.value)
+            ? action.value.map(itemValue => action.items.findIndex(item => item.value === itemValue))
+            : [action.items.findIndex(item => item.value === action.value)]
+        )
+      }
+    }
     case 'select_single_item': {
       return {
         ...state,
@@ -77,6 +88,11 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(({
     () => selectedItemsIndex.map(index => items[index]),
     [items, selectedItemsIndex]
   )
+
+  useEffect(() => {
+    // TODO: Try to do this without useEffect.
+    dispatch({ type: 'set_selected_items', value, items })
+  }, [value, items])
 
   const containerDivRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)

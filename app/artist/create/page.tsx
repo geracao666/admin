@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { Artist, artistSchema } from "../artist.schema";
 import { resolver } from '@/app/lib/yup'
 import useAxios from "@/app/lib/axios";
-import { Tag } from "@prisma/client";
 import ReactCrop, { Crop, PercentCrop } from 'react-image-crop'
 import "react-image-crop/dist/ReactCrop.css";
 import { useRef, useState } from "react";
@@ -124,7 +123,7 @@ export default function ArtistCreatePage() {
         {coverDataUrl && !errors.cover && <ImagePreview
           className="mb-4"
           imageRef={imgRef}
-          crop={percentCrop}
+          percentCrop={percentCrop}
           exportWidth={cropWidth}
           exportHeight={cropHeight}
           onChange={setCropDataUrl}

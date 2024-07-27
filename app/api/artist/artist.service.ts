@@ -168,6 +168,9 @@ export const getArtistsPaginated = async ({ page = 1, limit = 15 }: PaginationPa
     take: limit,
     include: {
       tags: true
+    },
+    orderBy: {
+      updatedAt: 'desc'
     }
   })
 

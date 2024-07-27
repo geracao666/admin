@@ -7,7 +7,7 @@ export const artistSchema = yup.object({
     allowedFormats: ['jpg', 'png']
   }).label('Imagem da capa').required(),
   origin: yup.string().label('País de origem').required(),
-  genres: yup.array(yup.string()).label('Gêneros musicais').optional(),
+  tags: yup.array(yup.string()).label('Tags').optional(),
 })
 
 export type Artist = yup.InferType<typeof artistSchema>

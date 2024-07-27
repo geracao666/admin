@@ -18,7 +18,7 @@ export default function FormAutocomplete({
   items: AutocompleteItem[],
   loading?: boolean,
   disabled?: boolean,
-  multiple?: boolean,
+  multiple?: boolean
 }) {
   const {
     control,

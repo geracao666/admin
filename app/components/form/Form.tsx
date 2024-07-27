@@ -7,10 +7,12 @@ import React from "react"
 export default function Form<T extends FieldValues>({
   children,
   context,
+  className,
   onSubmit = () => {}
 }: {
   children: React.ReactNode,
   context: UseFormReturn<T>,
+  className?: string,
   onSubmit?: SubmitHandler<T>
 }) {
   const internalOnSubmit = (data: T, event?: React.BaseSyntheticEvent) => {
@@ -21,7 +23,7 @@ export default function Form<T extends FieldValues>({
   return (
     <FormProvider {...context}>
       <FormComponent
-        className="max-w-xs"
+        className={className}
         onSubmit={context.handleSubmit(internalOnSubmit)}
       >
         {children}
